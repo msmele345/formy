@@ -1,26 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import PersonalInfoForm from './Form/PersonalInfoForm';
+import MainHeader from './MainHeader/MainHeader';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <MainHeader />
+      <main >
+        <h1>
+          Forms For Dayz
+        </h1>
+        <PersonalInfoForm inputFields={['First Name']}/>
+      </main>
     </div>
   );
 }
 
 export default App;
+// , 'Last Name', 'Ssn', 'Date of Birth'
