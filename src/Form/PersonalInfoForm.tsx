@@ -1,4 +1,5 @@
-import { ReactElement, RefObject, useEffect, useRef, useState } from "react";
+import { ReactElement, RefObject, useRef, useState } from "react";
+import Button from "../UI/Button/Button";
 import Card from "../UI/Card/Card";
 import InputField from "./InputField";
 import classes from './PersonalInfoForm.module.css';
@@ -6,35 +7,23 @@ import classes from './PersonalInfoForm.module.css';
 
 export interface PersonalInfoFormProps {
   inputFields: string[];
-}
+  loginHandler: (val: boolean) => void;
+  setFormData: (data: FormData) => void;
+};
 
 export interface FormData {
   firstName?: string;
-  lastName: string;
-  ssnRef: string;
-  dobRef: string;
-}
+  lastName?: string;
+  email?: string;
+};
 
 const PersonalInfoForm = (props: PersonalInfoFormProps): ReactElement => {
-
-  const [formData, setFormData] = useState<FormData>({
-    firstName: 'string',
-    lastName: 'string',
-    ssnRef: 'string',
-    dobRef: 'string'
-  });
 
   const [fieldId, setFieldId] = useState('');
 
   const firstNameRef = useRef<HTMLInputElement>();
   const lastNameRef = useRef<HTMLInputElement>()
-  const ssnRef = useRef<HTMLInputElement>();
-  const dobRef = useRef<HTMLInputElement>();
-
-  useEffect(() => {
-    console.log("FORM DATA", {formData});
-    console.log("FIELD ID", fieldId);
-  },[formData, fieldId])
+  const emailRef = useRef<HTMLInputElement>();
 
   const mapRef = (fieldName: string): RefObject<HTMLInputElement> | undefined => { 
     
@@ -42,24 +31,25 @@ const PersonalInfoForm = (props: PersonalInfoFormProps): ReactElement => {
       return firstNameRef as RefObject<HTMLInputElement>;
     } if(fieldName === 'Last Name') {
       return lastNameRef as RefObject<HTMLInputElement>;
-    } if(fieldName === 'Ssn') {
-      return ssnRef as RefObject<HTMLInputElement>;
-    } if(fieldName === 'Date Of Birth') {
-      return dobRef as RefObject<HTMLInputElement>;
-    }
-    return undefined;
+    } if(fieldName === 'Email') {
+      return emailRef as RefObject<HTMLInputElement>;
+    } 
+    return undefined; 
   };
 
   const handleOnChange = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      if(fieldId === 'first-name-input') {
-        setFormData({ ...formData, firstName: firstNameRef?.current?.value });
-      }
+      props.setFormData({
+        firstName: firstNameRef?.current?.value,
+        lastName: lastNameRef?.current?.value,
+        email: emailRef?.current?.value,
+      });
+      props.loginHandler(true);
   };
 
 
   return (
-    <Card classes={classes.login}>
+    <Card classes={classes.login}> 
       <form onSubmit={handleOnChange}>
           { 
             props.inputFields.map((field, index) => (
@@ -67,17 +57,29 @@ const PersonalInfoForm = (props: PersonalInfoFormProps): ReactElement => {
                 key={index}
                 id={field.toLowerCase().split(' ').join('-') + '-input'} 
                 type={"text"} 
-                value={field} 
+                value={mapRef(field)?.current?.value!!} 
                 label={field}
                 forwardRef={mapRef(field)}
                 setFieldId={setFieldId}
                 />
             ))
           }
-          <button type="submit">Submit</button>
+          <Button>Submit</Button>
       </form>
     </Card>
   )
 };
    
 export default PersonalInfoForm;
+
+      // if(fieldId === 'first-name-input') {
+      //   setFormData({ ...formData, firstName: firstNameRef?.current?.value });
+      // }
+      // if(fieldId === 'last-name-input') {
+      //   console.log("in last name form data", {formData});
+      //   setFormData({ ...formData, lastName: lastNameRef?.current?.value });
+      // } 
+      // if(fieldId === 'email-input') {
+      //   console.log("in email form data", {formData});
+      //   setFormData({ ...formData, email: emailRef?.current?.value });
+      // }

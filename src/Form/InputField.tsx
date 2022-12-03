@@ -1,6 +1,5 @@
-import React, { ChangeEvent, FC, LegacyRef, MutableRefObject, PropsWithChildren, RefObject, useState } from "react";
-import { isPropertySignature } from "typescript";
-import Card from "../UI/Card/Card";
+import React, { FC, PropsWithChildren, RefObject } from "react";
+import { formStyle, labelStyle } from "./form-constants";
 import classes from './PersonalInfoForm.module.css';
 
 export interface InputFieldProps {
@@ -23,32 +22,25 @@ const InputField: FC<PropsWithChildren<InputFieldProps>> = (
 {
   id,
   type,
-  value,
   forwardRef,
-  placeholder,
   label,
   setFieldId
 } 
 ): JSX.Element => {
 
-  const [enteredText, setEnteredText] = useState('');
+  // const style = {marginTop: '80px', maxWidth: '200px', minHeight: '80px'};
 
   return (
-    <Card classes={classes.login}>
-        <div className={`${classes.control}`} style={{marginTop: '80px', maxWidth: '50px'}}>
-          <label htmlFor={id}>{label}</label>
+        <div className={classes.control}>
+          <label style={{'marginLeft': '10px', 'marginTop': '10px'}}  htmlFor={id}>{label}</label>
           <input 
-            onChange={(e) => {
-              setEnteredText(e.target.value)
-              setFieldId(id);
-            }}
-            id={id} 
+            onChange={(e) => setFieldId(id)}
+            id={id}   
             type={type} 
-            value={enteredText}
-            ref={forwardRef}>
+            ref={forwardRef}
+            style={formStyle}>
           </input>
         </div>
-    </Card>
   )
 };
 

@@ -4,10 +4,10 @@ import classes from './Button.module.css';
 
 
 export interface ButtonProps {
-  type: string;
-  className: string;
+  type?: string;
+  className?: string;
   onClick?: () => void;
-  isDisabled: boolean;
+  isDisabled?: boolean;
   children?: any
 }
 
@@ -15,9 +15,9 @@ const Button: FC<ButtonProps> = (props: ButtonProps): ReactElement => {
   return (
     <button
       type={'submit'}
-      className={`${classes.button} ${props.className}`}
+      className={`${classes.button} ${props.className ?? ''}`}
       onClick={props.onClick}
-      disabled={props.isDisabled}
+      style={{'marginLeft': '15px'}}
     >
       {props.children}
     </button> 
