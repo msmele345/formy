@@ -13,6 +13,3 @@ const HeaderCartButton = () => {
 };
 
 export default HeaderCartButton;
-
-//git token
-//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
