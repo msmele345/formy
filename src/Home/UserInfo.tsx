@@ -6,10 +6,14 @@ const UserInfo = () => {
   const ctx = useContext(FormContext);
 
     return (
-      <section style={{'marginLeft': '430px', 'marginTop': '30px'}}>
-        <h3>User Profile</h3>
-          <p>{ctx.firstName}</p>
-          <p>{ctx.email}</p>
+      <section style={{'marginLeft': '750px', 'marginTop': '30px'}}>
+        { ctx.firstName && ctx.email && (
+          <>
+            <h2>User Profile</h2>
+            <p>{ctx.firstName}</p>
+            <p>{ctx.email}</p>
+          </>
+        )}
       </section>
     )
 };

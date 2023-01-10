@@ -1,5 +1,6 @@
-import { FC, ReactElement, RefObject } from "react";
-import { formStyle, labelStyle } from "./form-constants";
+import { FC, ReactElement, RefObject, useContext, useEffect, useState } from "react";
+import FormContext from "../store/form-context";
+import { formStyle } from "./form-constants";
 import classes from './PersonalInfoForm.module.css';
 
 export type StandardInputProps = {
@@ -22,9 +23,36 @@ const StandardInput: FC<StandardInputProps> = ({
   id,
   label
 }): ReactElement => {
+
+    const formCtx = useContext(FormContext);
+    const [inputStyles, setInputStyles2] = useState({});
+
+    useEffect(() => {
+
+      if(formCtx.emailIsValid === false && id === 'email-input') {
+        setInputStyles2({ borderColor: 'red' });
+      } else if(formCtx.firstNameIsValid === false && id === 'first-name-input') {
+        setInputStyles2({ borderColor: 'red' });
+      } else {
+        setInputStyles2({});
+      }
+      
+    }, [formCtx, id])
+
+    // function setInputStyles() {
+    //   if(formCtx.emailIsValid === false && id === 'email-input') {
+    //     return { borderColor: 'red' }
+    //   }
+
+    //   if(formCtx.firstNameIsValid === false && id === 'first-name-input') {
+    //     return { borderColor: 'red' }
+    //   }
+    //   return formStyle;
+    // }
+
     return (
-      <div className={`${classes.control}`}>
-        <label style={labelStyle} htmlFor={id}>{label}</label>
+      <div className={classes.control}>
+        <label htmlFor={id}>{label}</label>
         <input
           type={type}
           id={id}
@@ -32,12 +60,16 @@ const StandardInput: FC<StandardInputProps> = ({
           onChange={onChange}
           onBlur={onBlur}
           onFocus={onFocus}
-          style={formStyle} 
+          // style={formStyle} 
+          style={inputStyles}
+          // className={`${formCtx.emailIsValid === false ? classes.invalid : ''}`}
         />
+        <br/>
+        <div id={'helper-text'} style={{color: 'red', display: 'block'}}>
+            {/* <p>Error Text. Please Enter a ValidValue</p> */}
+        </div>
     </div>
     )
 };
 
 export default StandardInput;
-
-//${emailIsValid === false ? classes.invalid : ''}

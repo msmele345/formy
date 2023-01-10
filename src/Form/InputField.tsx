@@ -1,11 +1,11 @@
 import React, { FC, PropsWithChildren, RefObject } from "react";
-import { formStyle, labelStyle } from "./form-constants";
+import { formStyle } from "./form-constants";
 import classes from './PersonalInfoForm.module.css';
 
 export interface InputFieldProps {
   id: string;
   type: string;
-  value: string | number;
+  value: string | number;   
   label: string;
   customCss?: string
   labelCss?: string;
@@ -24,7 +24,9 @@ const InputField: FC<PropsWithChildren<InputFieldProps>> = (
   type,
   forwardRef,
   label,
-  setFieldId
+  setFieldId,
+  onBlur,
+  onFocus
 } 
 ): JSX.Element => {
 
@@ -34,13 +36,15 @@ const InputField: FC<PropsWithChildren<InputFieldProps>> = (
         <div className={classes.control}>
           <label style={{'marginLeft': '10px', 'marginTop': '10px'}}  htmlFor={id}>{label}</label>
           <input 
-            onChange={(e) => setFieldId(id)}
+            onChange={(e) => setFieldId(e.target.value)}
             id={id}   
             type={type} 
             ref={forwardRef}
-            style={formStyle}>
+            style={formStyle}
+            onBlur={onBlur}
+            onFocus={onFocus}>
           </input>
-        </div>
+        </div>  
   )
 };
 

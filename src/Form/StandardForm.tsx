@@ -1,4 +1,4 @@
-import { FC, ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import { StandardFormData } from "../Home/FormsPage";
 import Button from "../UI/Button/Button";
 import Card from "../UI/Card/Card";
@@ -8,30 +8,22 @@ import StandardInput from "./StandardInput";
 export type StandardFormProps = {
   formState: StandardFormData;
   setFormState: (data: StandardFormData) => void;
+  validationHandler: () => boolean;
 }
 
-const StandardForm: FC<StandardFormProps> = ({
+const StandardForm = ({
   formState,
-  setFormState
-}): ReactElement => {
+  setFormState,
+  validationHandler
+}: StandardFormProps): ReactElement => {
 
   const [enteredFirstName, setEnteredFirstName] = useState("");
+  const [enteredFirstNameIsValid, setEnteredFirstNameisValid] = useState(true);
   const [enteredEmail, setEnteredEmail] = useState("");
+  const [enteredEmailIsValid, setEnteredEmailIsValid] = useState(true);
 
   const handleOnBlur = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
     console.log("ON BLUR", event.target.id);
-    return "******";
-  };
-  
-  const handleOnFocus = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("ON FOCUS");
-    if(event.target.id === 'email-input') {
-      return enteredEmail;
-    }
-    if(event.target.id === 'first-name-input') {
-      return enteredFirstName;
-    }
   };
 
   const handleNameOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,19 +53,36 @@ const StandardForm: FC<StandardFormProps> = ({
     console.log("ON SUBMIT");
     console.log(enteredFirstName);
     console.log(enteredEmail);
+
+    if(enteredFirstName === '') {
+      setEnteredFirstNameisValid(false);
+    }
+    if(enteredEmail === '') {
+      setEnteredEmailIsValid(false);
+    }
+
+    const isFormValid = validationHandler();
+
+    if(!isFormValid) {
+      console.log("FORM INVALID ON SUBMIT");
+      return;
+    }
+
     setFormState({
       ...formState,
       firstName: enteredFirstName,
       email: enteredEmail,
     });
 
+    // formCtx.onSubmitValidityHandler();
+
     console.log("Form State at submit", { formState });
     setEnteredEmail('');
     setEnteredFirstName('');
   };
   return (
-    <Card classes={classes.login}>
-      <div style={{ marginTop: "120px", textAlign: "center" }}>
+    <Card className={classes.login}>
+      <div className={classes.control}>
         <form onSubmit={handleSubmit}>
           <StandardInput
             value={enteredFirstName}
@@ -81,7 +90,7 @@ const StandardForm: FC<StandardFormProps> = ({
             id={"first-name-input"}
             type={"text"}
             onChange={handleNameOnChange}
-            // onBlur={handleOnBlur}
+            onBlur={handleOnBlur}
             // onFocus={handleOnFocus}
           />
           <StandardInput
@@ -90,7 +99,7 @@ const StandardForm: FC<StandardFormProps> = ({
             id={"email-input"}
             type={"text"}
             onChange={handleEmailOnChange}
-            // onBlur={handleOnBlur}
+            onBlur={handleOnBlur}
             // onFocus={handleOnFocus}
           />
           <Button>Submit</Button>
@@ -101,14 +110,3 @@ const StandardForm: FC<StandardFormProps> = ({
 };
 
 export default StandardForm;
-
-/* <InputForwardRef
-type={"text"}
-id={"first-name-input"}
-label={"First Name"}
-onBlur={handleOnBlur}
-onChange={handleNameOnChange}
-// onFocus={}
-ref={firstNameRef}
-// forwardRef={firstNameRef as RefObject<HTMLInputElement>}
-/> */

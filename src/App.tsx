@@ -15,10 +15,7 @@ function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [formData, setFormData] = useState<AppFormData>({firstName: '', lastName: '',email: ''});
-
-  useEffect(() => {
-    console.log("FORM DATA", {formData})
-  }, [formData])
+  
 
   useEffect(() => {
     const localStorageLoggedin = localStorage.getItem('isLoggedIn');
