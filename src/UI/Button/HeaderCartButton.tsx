@@ -10,6 +10,6 @@ const HeaderCartButton = () => {
           <span className={classes.badge}>0</span>
         </button>
     )
-};
+}; //test
 
 export default HeaderCartButton;
