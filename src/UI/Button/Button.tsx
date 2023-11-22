@@ -11,15 +11,19 @@ export interface ButtonProps {
   children?: any
 }
 
-const Button: FC<ButtonProps> = (props: ButtonProps): ReactElement => {
+const Button = (
+{  children, 
+   className,
+   onClick
+}: ButtonProps): ReactElement => {
   return (
     <button
       type={'submit'}
-      className={`${classes.button} ${props.className ?? ''}`}
-      onClick={props.onClick}
+      className={`${classes.button} ${className ?? ''}`}
+      onClick={onClick}
       style={{'marginLeft': '15px'}}
     >
-      {props.children}
+      {children}
     </button> 
   );
 };

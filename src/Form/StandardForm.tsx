@@ -11,6 +11,7 @@ export type StandardFormProps = {
   validationHandler: () => boolean;
 }
 
+
 const StandardForm = ({
   formState,
   setFormState,
@@ -91,7 +92,6 @@ const StandardForm = ({
             type={"text"}
             onChange={handleNameOnChange}
             onBlur={handleOnBlur}
-            // onFocus={handleOnFocus}
           />
           <StandardInput
             value={enteredEmail}
@@ -100,7 +100,6 @@ const StandardForm = ({
             type={"text"}
             onChange={handleEmailOnChange}
             onBlur={handleOnBlur}
-            // onFocus={handleOnFocus}
           />
           <Button>Submit</Button>
         </form>

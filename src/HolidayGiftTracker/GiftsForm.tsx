@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import BasicInput from "./GiftForm/BasicInput";
 import classes from './GiftsForm.module.css';
 

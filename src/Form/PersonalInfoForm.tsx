@@ -91,15 +91,3 @@ const PersonalInfoForm = (props: PersonalInfoFormProps): ReactElement => {
 };
    
 export default PersonalInfoForm;
-
-      // if(fieldId === 'first-name-input') {
-      //   setFormData({ ...formData, firstName: firstNameRef?.current?.value });
-      // }
-      // if(fieldId === 'last-name-input') {
-      //   console.log("in last name form data", {formData});
-      //   setFormData({ ...formData, lastName: lastNameRef?.current?.value });
-      // } 
-      // if(fieldId === 'email-input') {
-      //   console.log("in email form data", {formData});
-      //   setFormData({ ...formData, email: emailRef?.current?.value });
-      // }
